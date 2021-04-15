@@ -3,6 +3,12 @@ package citrine_challenge;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Assumes nameSI is not in the keys of nameToFactor
+ * 
+ * @author lt
+ *
+ */
 public class Quantity {
     
     private final Map<String,Double> nameToFactor;

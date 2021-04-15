@@ -14,7 +14,7 @@ public class MultiplyTest {
         Multiply m = new Multiply(u1,u2);
         assertEquals(m.toString(),"minute*degree");
         assertEquals(m.toStringSI(),"s*rad");
-        assertEquals(m.getFactor(),Math.PI/3);
+        assertEquals(m.getFactor(),Math.PI/180*60);
     }
 
 }

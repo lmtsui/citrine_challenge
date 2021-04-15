@@ -24,7 +24,7 @@ public interface Expression {
         try {
             return ExpressionParser.parse(input);
         } catch (UnableToParseException e) {
-            throw new RuntimeException("the expression has a syntax error", e);
+            throw new RuntimeException(e.getMessage());
         }
     }
     

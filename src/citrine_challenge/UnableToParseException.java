@@ -9,5 +9,9 @@ public class UnableToParseException extends Exception {
     public UnableToParseException() {
         super();
     }
+    
+    public UnableToParseException(String str) {
+        super(str);
+    }
 
 }
