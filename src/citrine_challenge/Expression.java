@@ -1,5 +1,6 @@
 package citrine_challenge;
 
+
 /**
  * An immutable data type representing an unit expression.
  * 
@@ -17,14 +18,18 @@ public interface Expression {
      * Parse an expression.
      * @param input expression to parse
      * @return expression AST for the input
-     * @throws IllegalArgumentException if the expression is syntactically invalid.
+     * @throws RuntimeException if the expression is syntactically invalid.
      */
     public static Expression parse(String input){
-        throw new RuntimeException("unimplemented");
+        try {
+            return ExpressionParser.parse(input);
+        } catch (UnableToParseException e) {
+            throw new RuntimeException("the expression has a syntax error", e);
+        }
     }
     
     /**
-     * @return a parsable representation of this expression, such that
+     * @return str a parsable representation of this expression, such that
      *         for all e:Expression, e.equals(Expression.parse(e.toString()))
      */
     @Override 
@@ -46,7 +51,13 @@ public interface Expression {
     @Override
     public int hashCode();
     
+    /**
+     * @return str string representation of this expression in SI units
+     */
     public String toStringSI();
     
+    /**
+     * @return x Multiplication factor for which expression = x * expression in SI units
+     */
     public Double getFactor();
 }

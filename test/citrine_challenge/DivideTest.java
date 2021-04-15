@@ -7,8 +7,14 @@ import org.junit.jupiter.api.Test;
 
 class DivideTest {
 
-    @Test void test() {
-        fail("Not yet implemented");
+    @Test 
+    void test() {
+        Unit u1 = new Unit("hectare");
+        Unit u2 = new Unit("hour");
+        Divide d = new Divide(u1,u2);
+        assertEquals(d.toString(),"hectare/hour");
+        assertEquals(d.toStringSI(),"m2/s");
+        assertEquals(d.getFactor(),100.0/36);
     }
 
 }
