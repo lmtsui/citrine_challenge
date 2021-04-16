@@ -1,6 +1,5 @@
 package citrine_challenge;
 
-
 /**
  * AF(inner) = Expression which is represented by (inner).
  * RI: True

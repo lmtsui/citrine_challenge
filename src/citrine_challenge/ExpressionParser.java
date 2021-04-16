@@ -17,9 +17,9 @@ public class ExpressionParser {
             if (l==0) {
                 throw new UnableToParseException("input is empty");
             }
-            int height = 0;
-            boolean isBracket = true;
-            for (int i=l-1; i>=0; i--) {
+            int height = 0; //number of brackets enclosing position i
+            boolean isBracket = true; //whether the whole input is enclosed in a pair of brackets
+            for (int i=l-1; i>=0; i--) { //decreasing i, so * and / operators without brackets are evaluated from left to right
                 if (input.charAt(i)==')') {
                     height += 1;
                 }

@@ -13,7 +13,7 @@ class DivideTest {
         Unit u2 = new Unit("hour");
         Divide d = new Divide(u1,u2);
         assertEquals(d.toString(),"hectare/hour");
-        assertEquals(d.toStringSI(),"m2/s");
+        assertEquals(d.toStringSI(),"m^2/s");
         assertEquals(d.getFactor(),10000.0/3600);
     }
 

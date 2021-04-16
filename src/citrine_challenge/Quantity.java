@@ -12,11 +12,13 @@ import java.util.Set;
 public class Quantity {
     
     private final Map<String,Double> nameToFactor;
+    private final Map<String,String> symToName;
     private final String nameSI;
     
-    public Quantity(String nameSI, Map<String,Double> nameToFactor){
+    public Quantity(String nameSI, Map<String,Double> nameToFactor, Map<String,String> symToName){
         this.nameSI = nameSI;
-        this.nameToFactor = nameToFactor;       
+        this.nameToFactor = nameToFactor;
+        this.symToName = symToName;    
     }
     public String getNameSI() {
         return nameSI;
@@ -24,7 +26,13 @@ public class Quantity {
     public Map<String, Double> getNameToFactor() {
         return nameToFactor;
     }
+    public Map<String, String> getSymToName() {
+        return symToName;
+    }
     public Set<String> getNames() {
         return nameToFactor.keySet();
+    }
+    public Set<String> getSyms() {
+        return symToName.keySet();
     }
 }

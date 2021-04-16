@@ -8,7 +8,10 @@ import org.junit.jupiter.api.Test;
 class BracketTest {
 
     @Test void test() {
-        fail("Not yet implemented");
+        Unit u = new Unit("ha");
+        Bracket b = new Bracket(u);
+        assertEquals(b.toString(),"(hectare)");
+        assertEquals(b.toStringSI(),"(m^2)");
     }
 
 }

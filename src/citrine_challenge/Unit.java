@@ -1,12 +1,8 @@
 package citrine_challenge;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 /**
  * AF(str, quantity) = Expression which is represented by str.
- * RI: str is in quantity.getNames() or str.equals(quantity.getNameSI())
+ * RI: str is either the SI name, a quantity name, or a quantity symbol 
  * Safety from rep exposure: all fields are private final immutable.
  * 
  * @author lt
@@ -18,8 +14,8 @@ public class Unit implements Expression {
     
     public Unit(String str) {
         for (Quantity q: PresetQuantities.allQuantities) {
-            if (q.getNameSI().equals(str) || q.getNames().contains(str)) {
-                this.str = str;
+            if (q.getNameSI().equals(str) || q.getNames().contains(str) || q.getSyms().contains(str)) {
+                this.str = q.getSyms().contains(str)? q.getSymToName().get(str) : str; //converts quantity symbol to name if needed
                 this.quantity = q;
                 return ;
             }
