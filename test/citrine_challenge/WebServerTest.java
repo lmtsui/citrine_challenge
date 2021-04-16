@@ -9,18 +9,17 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 
 class WebServerTest {
 
     @Test void test() throws IOException {
         WebServer server = new WebServer(0);
         JSONObject obj = server.convertUnits("(degree/minute)");
-        assertEquals(obj.toString(), "{\"unit_name\":\"(rad\\/s)\",\"multiplication_factor\":0.00029088820866572}");
+        assertEquals(obj.toString(), "{\"unit_name\":\"(rad/s)\",\"multiplication_factor\":0.00029088820866572}");
     }
     
     @Test
@@ -46,7 +45,7 @@ class WebServerTest {
     @Test
     public void testUnitSI() throws IOException, URISyntaxException {
         testIO("(rad)","{\"unit_name\":\"(rad)\",\"multiplication_factor\":1}");
-        testIO("(degree/minute)","{\"unit_name\":\"(rad\\/s)\",\"multiplication_factor\":0.00029088820866572}");
+        testIO("(degree/minute)","{\"unit_name\":\"(rad/s)\",\"multiplication_factor\":0.00029088820866572}");
     }
 
 }
