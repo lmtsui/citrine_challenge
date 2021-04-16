@@ -49,16 +49,22 @@ class WebServerTest {
         testIO("(degree/minute)","{\"unit_name\":\"(rad/s)\",\"multiplication_factor\":0.00029088820866572}");
     }
     
-    @Test
-    public void testUnitSIInvalid() throws IOException, URISyntaxException {
+    
+    public void testIOInvalid(String units) throws IOException, URISyntaxException {
         final WebServer server = new WebServer(0);
         server.start();
         
-        final URL invalid = new URL("http://localhost:" + server.port() + "/units/si?test=abc");
+        final URL invalid = new URL("http://localhost:" + server.port() + units);
         
         final HttpURLConnection connection = (HttpURLConnection) invalid.openConnection();
         assertEquals(404, connection.getResponseCode(), "response code");
         server.stop();
+    }
+    
+    @Test
+    public void testUnitSIInvalid() throws IOException, URISyntaxException{
+        testIOInvalid("/units/si?test=abc");
+        testIOInvalid("/units/ghc");
     }
 
 }

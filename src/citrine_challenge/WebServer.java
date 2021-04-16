@@ -11,6 +11,7 @@ import java.math.MathContext;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executors;
 
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
@@ -26,6 +27,8 @@ public class WebServer {
     
     private final HttpServer server;
     
+    
+    
     /**
      * Make a new web server that listens for connections on port.
      * 
@@ -34,6 +37,9 @@ public class WebServer {
      */
     public WebServer(int port) throws IOException {
         this.server = HttpServer.create(new InetSocketAddress(port), 0);
+        
+        // handle concurrent requests with multiple threads
+        server.setExecutor(Executors.newCachedThreadPool());
                 
         HttpContext units = server.createContext("/units/", new HttpHandler() {
             public void handle(HttpExchange exchange) throws IOException {
@@ -47,20 +53,26 @@ public class WebServer {
         final String base = exchange.getHttpContext().getPath();
         final String subpath = path.substring(base.length());
         final String query = exchange.getRequestURI().getQuery();
-        final Map<String,String> queryMap = getQueryMap(query);
-        if (!subpath.equals("si") | !queryMap.containsKey("units")) {
+        String response;
+        if (query==null) {
             exchange.sendResponseHeaders(404, 0);
-        }
-        final String units = queryMap.get("units");
-        
-        final Conversion response;
-        
-        exchange.sendResponseHeaders(200, 0);
-        response = convertUnits(units);
+            response = "invalid URL";
+        }else {
+            final Map<String,String> queryMap = getQueryMap(query);
             
+            if (!subpath.equals("si") | !queryMap.containsKey("units")) {
+                exchange.sendResponseHeaders(404, 0);
+                response = "invalid URL";
+            }else {
+                final String units = queryMap.get("units");
+                
+                exchange.sendResponseHeaders(200, 0);
+                response = convertUnits(units).toString();
+            }
+        }
+        
         OutputStream body = exchange.getResponseBody();
         PrintWriter out = new PrintWriter(new OutputStreamWriter(body, UTF_8), true);
-    
         out.println(response);
         
         exchange.close();
@@ -81,12 +93,13 @@ public class WebServer {
     }  
     
     /**
-     * Convert a units string into a conversion object
+     * Convert a units string into a conversion object. 
+     * Only one thread can be converting at a time.
      * 
      * @param units Properly formatted unit string, as defined in prompt.pdf
      * @return conversion Conversion object, as specified in prompt.pdf
      */
-    public Conversion convertUnits(String units) {
+    public synchronized Conversion convertUnits(String units) {
         Expression expr = Expression.parse(units);
         String stringSI = expr.toStringSI();
         Double factor = expr.getFactor(); 
