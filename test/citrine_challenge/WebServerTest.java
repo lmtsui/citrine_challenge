@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
 
@@ -46,6 +47,18 @@ class WebServerTest {
     public void testUnitSI() throws IOException, URISyntaxException {
         testIO("(rad)","{\"unit_name\":\"(rad)\",\"multiplication_factor\":1}");
         testIO("(degree/minute)","{\"unit_name\":\"(rad/s)\",\"multiplication_factor\":0.00029088820866572}");
+    }
+    
+    @Test
+    public void testUnitSIInvalid() throws IOException, URISyntaxException {
+        final WebServer server = new WebServer(0);
+        server.start();
+        
+        final URL invalid = new URL("http://localhost:" + server.port() + "/units/si?test=abc");
+        
+        final HttpURLConnection connection = (HttpURLConnection) invalid.openConnection();
+        assertEquals(404, connection.getResponseCode(), "response code");
+        server.stop();
     }
 
 }
