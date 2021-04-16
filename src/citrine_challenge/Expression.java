@@ -29,7 +29,7 @@ public interface Expression {
     }
     
     /**
-     * @return str a parsable representation of this expression, such that
+     * @return a parsable representation of this expression, such that
      *         for all e:Expression, e.equals(Expression.parse(e.toString()))
      */
     @Override 
@@ -52,12 +52,12 @@ public interface Expression {
     public int hashCode();
     
     /**
-     * @return str string representation of this expression in SI units
+     * @return string representation of this expression in SI units
      */
     public String toStringSI();
     
     /**
-     * @return x Multiplication factor for which expression = x * expression in SI units
+     * @return Multiplication factor for which expression = x * expression in SI units
      */
     public Double getFactor();
 }

@@ -11,8 +11,16 @@ import org.json.simple.JSONObject;
  *
  */
 public class Conversion extends JSONObject {
+    private final String stringSI;
+    private final BigDecimal factor;
     public Conversion(String stringSI, BigDecimal factor14sf) {
+        this.stringSI = stringSI;
+        this.factor = factor14sf;
         this.put("unit_name", stringSI);
         this.put("multiplication_factor", factor14sf);
+    }
+    
+    public String getStringSI() {
+        return stringSI;
     }
 }
