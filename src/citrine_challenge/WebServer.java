@@ -9,6 +9,8 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.net.InetSocketAddress;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
@@ -33,19 +35,23 @@ public class WebServer {
     public WebServer(int port) throws IOException {
         this.server = HttpServer.create(new InetSocketAddress(port), 0);
                 
-        HttpContext units = server.createContext("/units/si", new HttpHandler() {
+        HttpContext units = server.createContext("/units/", new HttpHandler() {
             public void handle(HttpExchange exchange) throws IOException {
-                handleUnitsSI(exchange);
+                handleUnits(exchange);
             }
         });
     }
     
-    private void handleUnitsSI(HttpExchange exchange) throws IOException {
+    private void handleUnits(HttpExchange exchange) throws IOException {
+        final String path = exchange.getRequestURI().getPath();
+        final String base = exchange.getHttpContext().getPath();
+        final String subpath = path.substring(base.length());
         final String query = exchange.getRequestURI().getQuery();
-        if (!query.startsWith("units=")) {
+        final Map<String,String> queryMap = getQueryMap(query);
+        if (!subpath.equals("si") | !queryMap.containsKey("units")) {
             exchange.sendResponseHeaders(404, 0);
         }
-        final String units = query.split("units=")[1];
+        final String units = queryMap.get("units");
         
         final Conversion response;
         
@@ -59,6 +65,20 @@ public class WebServer {
         
         exchange.close();
     }
+    
+    //https://stackoverflow.com/questions/4128436/query-string-manipulation-in-java
+    public static Map<String, String> getQueryMap(String query)  
+    {  
+        String[] params = query.split("&");  
+        Map<String, String> map = new HashMap<String, String>();  
+        for (String param : params)  
+        {  
+            String name = param.split("=")[0];  
+            String value = param.split("=")[1];  
+            map.put(name, value);  
+        }  
+        return map;  
+    }  
     
     /**
      * Convert a units string into a conversion object
@@ -92,7 +112,7 @@ public class WebServer {
     }
     
     /**
-     * Stop this server. Once stopped, this server cannot be restarted.
+     * Stop this server.
      */
     public void stop() {
         System.err.println("Server will stop");
