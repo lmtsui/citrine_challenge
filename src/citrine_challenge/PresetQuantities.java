@@ -30,6 +30,6 @@ public class PresetQuantities {
             }
             init = true;
         }
-        return allNames;
+        return new HashSet<String>(allNames);
     }
 }
