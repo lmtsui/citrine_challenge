@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+//In the input URL, caret character '^' must be encoded as %5E instead!
+//In the input URL, double quote character '"' must be encoded as %22 instead!
 public class PresetQuantities {
     static final Quantity time = new Quantity("s", Map.of("minute",60.0,  "hour",3600.0,  "day",86400.0),
                                                    Map.of("min", "minute",  "h", "hour",  "d", "day"));
     
     static final Quantity planeAngle = new Quantity("rad", Map.of("degree",Math.PI/180,  "arcminute",Math.PI/10800,  "arcsecond",Math.PI/648000),
                                                            Map.of("°", "degree",  "'", "arcminute",  "\"", "arcsecond"));
-    
     static final Quantity area = new Quantity("m^2", Map.of("hectare",10000.0), Map.of("ha", "hectare"));
     
     static final Quantity volume = new Quantity("m^3", Map.of("litre",0.001), Map.of("L", "litre"));

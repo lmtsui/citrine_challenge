@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
 
+
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -27,8 +28,6 @@ public class WebServer {
     
     private final HttpServer server;
     
-    
-    
     /**
      * Make a new web server that listens for connections on port.
      * 
@@ -39,8 +38,7 @@ public class WebServer {
         this.server = HttpServer.create(new InetSocketAddress(port), 0);
         
         // handle concurrent requests with multiple threads
-        server.setExecutor(Executors.newCachedThreadPool());
-                
+        server.setExecutor(Executors.newCachedThreadPool());     
         HttpContext units = server.createContext("/units/", new HttpHandler() {
             public void handle(HttpExchange exchange) throws IOException {
                 handleUnits(exchange);

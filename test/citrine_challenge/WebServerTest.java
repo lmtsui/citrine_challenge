@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import org.junit.jupiter.api.Test;
 
@@ -30,6 +31,7 @@ class WebServerTest {
     }
     
     public void testIO(String units, String output) throws IOException, URISyntaxException {
+        units = URLEncoder.encode(units, "UTF-8");
         final WebServer server = new WebServer(0);
         server.start();
         
@@ -47,6 +49,13 @@ class WebServerTest {
     public void testUnitSI() throws IOException, URISyntaxException {
         testIO("(rad)","{\"unit_name\":\"(rad)\",\"multiplication_factor\":1}");
         testIO("(degree/minute)","{\"unit_name\":\"(rad/s)\",\"multiplication_factor\":0.00029088820866572}");
+    }
+    
+    @Test
+    public void testSpecialCharacters() throws IOException, URISyntaxException {
+        testIO("(m^2)","{\"unit_name\":\"(m^2)\",\"multiplication_factor\":1}");
+        testIO("(')","{\"unit_name\":\"(rad)\",\"multiplication_factor\":0.00029088820866572}");
+        testIO("(\")","{\"unit_name\":\"(rad)\",\"multiplication_factor\":0.0000048481368110954}");
     }
     
     

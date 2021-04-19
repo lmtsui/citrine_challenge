@@ -24,3 +24,11 @@ You should see the following output in the browser:
 ```
 {"unit_name":"(rad/s)","multiplication_factor":0.00029088820866572}
 ```
+Note: special characters, ^ and \", must be encoded as %5E and %22 respectively. Eg.
+```
+http://localhost:8080/units/si?units=m%5E2
+```
+Output:
+```
+{"unit_name":"m^2","multiplication_factor":1}
+```
