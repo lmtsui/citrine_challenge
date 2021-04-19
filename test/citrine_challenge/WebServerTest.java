@@ -56,6 +56,7 @@ class WebServerTest {
         testIO("(m^2)","{\"unit_name\":\"(m^2)\",\"multiplication_factor\":1}");
         testIO("(')","{\"unit_name\":\"(rad)\",\"multiplication_factor\":0.00029088820866572}");
         testIO("(\")","{\"unit_name\":\"(rad)\",\"multiplication_factor\":0.0000048481368110954}");
+        testIO("(°)","{\"unit_name\":\"(rad)\",\"multiplication_factor\":0.017453292519943}");
     }
     
     
