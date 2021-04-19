@@ -14,7 +14,7 @@ when image is running, go to the following link in the browser
 ```
 http://localhost:8080/units/si?units=<UNIT STRING>
 ```
-where <UNIT STRING> is a properly formatted unit string as defined in prompt.pdf.
+where `<UNIT STRING>` is a properly formatted unit string as defined in prompt.pdf.
 
 For example:
 ```
