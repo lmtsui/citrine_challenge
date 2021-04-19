@@ -10,7 +10,7 @@ public class PresetQuantities {
                                                    Map.of("min", "minute",  "h", "hour",  "d", "day"));
     
     static final Quantity planeAngle = new Quantity("rad", Map.of("degree",Math.PI/180,  "arcminute",Math.PI/10800,  "arcsecond",Math.PI/648000),
-                                                           Map.of("°", "degree",  "'", "arcminute",  "\"", "arcsecond"));
+                                                           Map.of("Â°", "degree",  "'", "arcminute",  "\"", "arcsecond"));
     
     static final Quantity area = new Quantity("m^2", Map.of("hectare",10000.0), Map.of("ha", "hectare"));
     

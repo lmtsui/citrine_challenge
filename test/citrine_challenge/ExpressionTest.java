@@ -12,7 +12,7 @@ public class ExpressionTest {
         Unit u = new Unit("m^2");
         assertEquals(e,u);
 //        assertEquals(PresetQuantities.getAllNames().toString(),
-//                "[\", d, m2, m3, ', h, degree, litre, hectare, L, minute, °, s, min, hour, rad, t, ha, kg, tonne, day, arcminute, arcsecond]");
+//                "[\", d, m2, m3, ', h, degree, litre, hectare, L, minute, Â°, s, min, hour, rad, t, ha, kg, tonne, day, arcminute, arcsecond]");
         
         e = Expression.parse("((hectare))");
         assertEquals(e.getFactor(),10000.0);
@@ -53,7 +53,7 @@ public class ExpressionTest {
         assertEquals(e.toStringSI(), "(rad/(s*m^2))");
         assertEquals(e.getFactor(), Math.PI/180/(60*10000));
         
-        e = Expression.parse("ha*°");
+        e = Expression.parse("ha*Â°");
         assertEquals(e, Expression.parse(e.toString()));
         assertEquals(e.toStringSI(), "m^2*rad");
         assertEquals(e.getFactor(), 10000*Math.PI/180);
